@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({extended : true})); // urlencoding된 파라미�
 
 // view engine을 ejs로 세팅해줘야함
 app.set('view engine', 'ejs');
+app.set('views', './views'); // views 로 사용될 폴더 경로 지정(생략시 기본 루트 아래 views로 지정됨)
 
 app.listen(3000, (req, res) => {
     console.log('server start 3000 port');
