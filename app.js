@@ -1,6 +1,7 @@
 var express = require('express');
 const bodyParser = require('body-parser');
 var app = express();
+var connection = require('./dbsetting');
 /**
  * 1. npm install express -- save // save : package.json에 기록되는 옵션으로 나중에 npm install 수행시 package.json에 있는 파일을
  *   한번에 설치할 수 있게 해준다.(보통 node_modules는 git등에 올리지 않기 때문)
@@ -50,5 +51,49 @@ app.post('/email_post', (req, res, next) => {
         nameParam : params.nameParam
     });
     // test.ejs 파일에서 <%= email %> 등과 같이 꺼내서 사용
+});
+
+app.post('/ajax_test', function(req, res){
+
+    // 요청받은 파라미터를 가져옴(bodyParser 통해서)
+    var reqParams = req.body;
+    
+    // 응답 객체 세팅
+    var resData = {
+        result : 'Success',
+        resultMsg : 'Success'
+    }
+
+    resData.email = reqParams.email;
+    resData.name = reqParams.name;
+
+    // json 타입으로 응답함
+    res.json(resData);
+
+});
+
+app.post('/ajax_test_using_db', function(req, res){
+
+    // 요청받은 파라미터를 가져옴(bodyParser 통해서)
+    var reqParams = req.body;
+    
+    // 응답 객체 세팅
+    var resData = {};
+
+    connection.query(`SELECT name from user where email=${reqParams.email}`, function(err, rows, fields) {
+        if (err) throw err;
+        
+        if(rows[0]){
+            resData.result = "Success";
+            resData.name = rows[0].name;
+        } else {
+            resData.result = "none";
+            resData.name = "";
+        }
+    });
+
+    // json 타입으로 응답함
+    res.json(resData);
+
 });
 
