@@ -1,6 +1,6 @@
 $.ajax({
 
-    url: "/ajax_test", // 클라이언트가 요청을 보낼 서버의 URL 주소
+    url: "/email/form", // 클라이언트가 요청을 보낼 서버의 URL 주소
 
     data: {
         name : 'gomugom',
