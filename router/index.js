@@ -5,6 +5,7 @@ var path = require('path');
 var main = require('./main/main');
 var email = require('./email/email');
 var join = require('./join/index');
+var login = require('./login/index');
 
 // url routing
 router.get('/', (req, res, next) => {
@@ -18,5 +19,6 @@ router.use('/main',  main);
 // /email/~
 router.use('/email', email);
 router.use('/join', join);
+router.use('/login', login);
 
 module.exports = router;
