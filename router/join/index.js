@@ -77,10 +77,13 @@ passport.use('local-join', new LocalStrategy({
 
 }));
 
-router.post('/', passport.authenticate('local-join'), {
-    successRedirect: '/main',
-    failureRedirect: '/join',
-    failureFlash: true // passport에게 flash메시지를 사용할지 말지를 결정해주는 속성
-});
+
+router.post('/',
+  passport.authenticate('local-join', { 
+      successRedirect: '/main',
+      failureRedirect: '/join',
+      failureFlash: true }) // passport에게 flash메시지를 사용할지 말지를 결정해주는 속성
+
+);
 
 module.exports = router;
