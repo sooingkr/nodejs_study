@@ -15,6 +15,13 @@ var router = require('./router/index');
 // var main = require('./router/main');
 // var email = require('./router/email');
 
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var session = require('express-session');
+var flash = require('connect-flash');
+
+//////////////////////// MIDDLE WARE /////////////////////////////
+
 // 이미지 경로, import하는 js파일 등(리소스)을 static 파일이라하는데 이 경로를 지정해 주어야 사용가능하다.
 // 미들웨어를 통해 아래처럼 등록 가능(public 하위 경로 인식)
 app.use(express.static('public'));
@@ -30,9 +37,23 @@ app.use(router);
 // /email/~
 // app.use('/email', email);
 
+// Document 참조...
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+// connect-flash : 메시지를 쉽게 전달할 수 있도록 해줌(일회성 메시지)
+app.use(flash());
+
 // view engine을 ejs로 세팅해줘야함
 app.set('view engine', 'ejs');
 app.set('views', './views'); // views 로 사용될 폴더 경로 지정(생략시 기본 루트 아래 views로 지정됨)
+
+//////////////////////// END OF MIDDLE WARE /////////////////////////////
 
 app.listen(3000, (req, res) => {
     console.log('server start 3000 port');
