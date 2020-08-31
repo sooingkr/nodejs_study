@@ -39,8 +39,10 @@
             var result = JSON.parse(xhr.responseText);
             var resultDiv = document.querySelector('.result');
 
-            if(result.email) resultDiv.innerHTML = "welcome, " + result.email + "!!";
-            else resultDiv.innerHTML = result;
+            if(result.email) {
+               // resultDiv.innerHTML = "welcome, " + result.email + "!!";
+                window.location.href = "/main";
+            } else resultDiv.innerHTML = result;
         })
     }
 </script>
